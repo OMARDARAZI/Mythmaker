@@ -7,6 +7,7 @@ class primaryBtn extends StatelessWidget {
    primaryBtn({super.key,required this.text,required this.isLoading});
    bool isLoading;
   String text;
+
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -41,7 +41,7 @@ dependencies:
   lottie:
   http:
   shared_preferences:
-
+  intl_utils:
 
 
 dev_dependencies:

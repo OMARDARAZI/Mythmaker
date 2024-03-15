@@ -43,7 +43,10 @@ dependencies:
   shared_preferences:
   intl_utils:
   iconsax: 
-  svg_icon: 
+  svg_icon:
+  fialogs:
+  smooth_scroll_multiplatform:
+  all_validations_br:
 
 
 dev_dependencies:

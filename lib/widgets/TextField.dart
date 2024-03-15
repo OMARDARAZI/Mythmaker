@@ -2,24 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class customeTextField extends StatelessWidget {
-  customeTextField({super.key,required this.hint,required this.controller});
+  customeTextField({
+    super.key,
+    required this.hint,
+    this.isObscure = false,
+    required this.controller,
+    this.suffixIcon,
+    this.keyboardType,
+    this.validator,
+  });
 
   String hint;
+  bool isObscure;
   TextEditingController controller;
+  final Widget? suffixIcon;
+  final TextInputType? keyboardType;
+
+  final String? Function(String?)? validator;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25.w),
       child: TextFormField(
+        validator: validator,
+        keyboardType: keyboardType,
+        obscureText: isObscure,
         controller: controller,
         style: const TextStyle(),
-        decoration:  InputDecoration(
+        decoration: InputDecoration(
           hintText: hint,
+          suffixIcon: suffixIcon,
+          suffixIconColor: Colors.grey,
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(15.w)),
-            borderSide: BorderSide.none
+            borderSide: BorderSide.none,
           ),
         ),
       ),

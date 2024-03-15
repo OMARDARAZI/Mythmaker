@@ -42,6 +42,8 @@ dependencies:
   http:
   shared_preferences:
   intl_utils:
+  iconsax: 
+  svg_icon: 
 
 
 dev_dependencies:

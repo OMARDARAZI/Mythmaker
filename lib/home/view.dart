@@ -68,6 +68,19 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
+              GridView.builder(
+                shrinkWrap: true,
+                itemCount: 20,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1),
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Container(
+                    color: Colors.red,
+                  ),
+                ),
+              )
             ],
           ),
         ),

@@ -10,6 +10,8 @@ class customeTextField extends StatelessWidget {
     this.suffixIcon,
     this.keyboardType,
     this.validator,
+    required this.onChanged,
+
   });
 
   String hint;
@@ -17,7 +19,7 @@ class customeTextField extends StatelessWidget {
   TextEditingController controller;
   final Widget? suffixIcon;
   final TextInputType? keyboardType;
-
+  final void Function(String) onChanged;
   final String? Function(String?)? validator;
 
   @override
@@ -25,6 +27,7 @@ class customeTextField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25.w),
       child: TextFormField(
+        onChanged: onChanged,
         validator: validator,
         keyboardType: keyboardType,
         obscureText: isObscure,

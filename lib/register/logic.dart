@@ -14,6 +14,9 @@ class RegisterLogic extends GetxController {
   final formKey = GlobalKey<FormState>();
   final loginLogic = Get.put(LoginLogic());
 
+  updateUi(){
+    update();
+  }
   Future<void> registerUser({
     required String name,
     required String email,

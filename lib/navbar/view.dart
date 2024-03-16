@@ -15,9 +15,115 @@ class NavbarPage extends StatelessWidget {
       builder: (logic) {
         return Scaffold(
           backgroundColor: backgroundColor,
-          body: Center(child: logic.pages[logic.index]),
+          body: Stack(
+            children: [
+              logic.pages[logic.index],
+              Positioned(
+                bottom: 20,
+                right: 25,
+                left: 25,
+                child: ClipPath(
+                  clipper: NotchClipper(),
+                  child: Container(
+                    width: 350.w,
+                    height: 100.h,
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                          topRight: Radius.circular(24),
+                          bottomRight: Radius.circular(47.18),
+                          bottomLeft: Radius.circular(47.18),
+
+                        ),),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        InkWell(
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(100)),
+                          onTap: () {
+                            logic.changeIndex(0);
+                          },
+                          child: SizedBox(
+                            width: 80.w,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Iconsax.home,
+                                  size: 30.w,
+                                  color: logic.index == 0
+                                      ? primaryColor
+                                      : Colors.grey,
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Text(
+                                  'Home',
+                                  style: TextStyle(
+                                    fontSize: 15.sp,
+                                    color: logic.index == 0
+                                        ? primaryColor
+                                        : Colors.grey,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 40.w,
+                        ),
+                        InkWell(
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(100)),
+                          onTap: () {
+                            logic.changeIndex(1);
+                          },
+                          child: SizedBox(
+                            width: 80.w,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Iconsax.profile_circle,
+                                  size: 30.w,
+                                  color: logic.index == 1
+                                      ? primaryColor
+                                      : Colors.grey,
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Text(
+                                  'Profile',
+                                  style: TextStyle(
+                                    fontSize: 15.sp,
+                                    color: logic.index == 1
+                                        ? primaryColor
+                                        : Colors.grey,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
           floatingActionButton: Padding(
-            padding: EdgeInsets.all(10.w),
+            padding: EdgeInsets.symmetric(vertical: 80.h),
             child: FloatingActionButton(
               backgroundColor: primaryColor,
               onPressed: () {},
@@ -26,105 +132,36 @@ class NavbarPage extends StatelessWidget {
             ),
           ),
           floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.only(bottom: 30),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(20),
-                topLeft: Radius.circular(20),
-                bottomLeft: Radius.circular(50),
-                bottomRight: Radius.circular(50),
-              ),
-              child: BottomAppBar(
-                elevation: 10,
-                height: 80.h,
-                shape: const CircularNotchedRectangle(),
-                notchMargin: 5.0,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      InkWell(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(100)),
-                        onTap: () {
-                          logic.changeIndex(0);
-                        },
-                        child: SizedBox(
-                          width: 80.w,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Iconsax.home,
-                                size: 30.w,
-                                color: logic.index == 0
-                                    ? primaryColor
-                                    : Colors.grey,
-                              ),
-                              SizedBox(
-                                height: 5.h,
-                              ),
-                              Text(
-                                'Home',
-                                style: TextStyle(
-                                  fontSize: 15.sp,
-                                  color: logic.index == 0
-                                      ? primaryColor
-                                      : Colors.grey,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 40.w,
-                      ),
-                      InkWell(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(100)),
-                        onTap: () {
-                          logic.changeIndex(1);
-                        },
-                        child: SizedBox(
-                          width: 80.w,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Iconsax.profile_circle,
-                                size: 30.w,
-                                color: logic.index == 1
-                                    ? primaryColor
-                                    : Colors.grey,
-                              ),
-                              SizedBox(
-                                height: 5.h,
-                              ),
-                              Text(
-                                'Profile',
-                                style: TextStyle(
-                                  fontSize: 15.sp,
-                                  color: logic.index == 1
-                                      ? primaryColor
-                                      : Colors.grey,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
+              FloatingActionButtonLocation.centerFloat,
         );
       },
     );
   }
+}
+
+class NotchClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    double notchSize = 70; // Diameter of the notch
+    Path path = Path();
+
+    path.lineTo(0, 0);
+
+    path.lineTo((size.width / 2) - (notchSize / 2), 0);
+
+    path.arcToPoint(
+      Offset((size.width / 2) + (notchSize / 2), 0),
+      radius: Radius.circular(notchSize / 2),
+      clockwise: false,
+    );
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }

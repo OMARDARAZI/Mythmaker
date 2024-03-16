@@ -47,6 +47,7 @@ dependencies:
   fialogs:
   smooth_scroll_multiplatform:
   all_validations_br:
+  intl:
 
 
 dev_dependencies:

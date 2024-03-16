@@ -70,10 +70,11 @@ class RegisterPage extends StatelessWidget {
                               else if(p0!.length<3){
                                 return 'At least 3 characters';
                               }
-                            },
+                            }, onChanged: (String ) { logic.updateUi();},
                           ),
                           SizedBox(height: 40.h),
                           customeTextField(
+                            onChanged: (p0) => logic.updateUi(),
                             validator: (p0) {
                               if(p0==''){
                                 return 'Enter your Email';
@@ -96,7 +97,7 @@ class RegisterPage extends StatelessWidget {
                                 return 'Password requirements: \n- At least 6 characters \n- At least 1 uppercase letter \n- At least 1 lowercase letter \n- At least 1 number';
                                 // return 'Password should contain\nAt least 6 characters\n1 Uppercase letter\n1 Lowercase letter\nand 1 number';
                               }
-                            },
+                            }, onChanged: (p0) => logic.updateUi(),
                           ),
                           SizedBox(height: 40.h),
                           GestureDetector(
@@ -123,7 +124,7 @@ class RegisterPage extends StatelessWidget {
                                 },
                                 hint: 'Date of Birth',
                                 controller:
-                                    dobController,
+                                    dobController, onChanged: (String ) { logic.updateUi(); },
                               ),
                             ),
                           ),

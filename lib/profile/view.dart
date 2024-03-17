@@ -24,11 +24,11 @@ class ProfilePage extends StatelessWidget {
                 future:navbarLogic.fetchUserData(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else if (snapshot.data == null) {
-                    return Center(child: Text('User data not found'));
+                    return const Center(child: Text('User data not found'));
                   } else {
                     User user = snapshot.data!;
                     return SingleChildScrollView(

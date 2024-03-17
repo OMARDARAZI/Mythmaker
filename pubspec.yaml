@@ -48,6 +48,8 @@ dependencies:
   smooth_scroll_multiplatform:
   all_validations_br:
   intl:
+  typewritertext:
+  cached_network_image:
 
 
 dev_dependencies:

@@ -27,103 +27,71 @@ class LoginLogic extends GetxController {
     update();
   }
 
-Future<String?> Login(String email, String password,BuildContext context) async {
-  isLoading=true;
-  update();
-  try {
+  Future<String?> login(String email, String password, BuildContext context) async {
+    isLoading = true;
+    update(); // Assuming 'update' is a method to refresh UI, make sure it's correctly implemented.
 
-    final response = await http.post(
-      Uri.parse('${backendLink}/login'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'email': email,
-        'password': password,
-      }),
-    );
+    try {
+      final response = await http.post(
+        Uri.parse('$backendLink/login'), // Ensure 'backendLink' is defined and correct.
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'email': email,
+          'password': password,
+        }),
+      );
 
-    if (response.statusCode == 200) {
-      isLoading=false;
+      isLoading = false;
       update();
-      final data = json.decode(response.body);
-      await TokenUtils.saveToken(data['token']);
-      print(await TokenUtils.retrieveToken());
 
-        Get.offAll(()=>NavbarPage(),transition: Transition.rightToLeftWithFade);
-      return data['token'];
-    } else if (response.statusCode == 404) {
-      isLoading=false;
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        await TokenUtils.saveToken(data['accessToken']); // Corrected from 'token' to 'accessToken'.
+        print(await TokenUtils.retrieveToken());
+
+        Get.offAll(() => NavbarPage(), transition: Transition.rightToLeftWithFade); // Make sure NavbarPage is defined.
+        return data['accessToken'];
+      } else {
+        // Handle errors more generically to avoid redundancy.
+        String errorMessage = "An unexpected error occurred.";
+        if (response.statusCode == 404 || response.statusCode == 400) {
+          errorMessage = "Invalid email or password.";
+        }
+        print(errorMessage);
+        errorDialog(
+          context,
+          "Error",
+          errorMessage,
+          positiveButtonText: "OK",
+          positiveButtonAction: () {},
+          negativeButtonText: "",
+          negativeButtonAction: () {},
+          neutralButtonText: "",
+          neutralButtonAction: () {},
+          hideNeutralButton: true, // Assuming you want to hide the neutral button by default.
+          closeOnBackPress: false,
+        );
+        return null;
+      }
+    } catch (e) {
+      isLoading = false;
       update();
-      print("User not found.");
-
+      print("Error: $e");
       errorDialog(
         context,
         "Error",
-        "User not found",
+        "Failed to connect. Please try again later.",
         positiveButtonText: "OK",
         positiveButtonAction: () {},
         negativeButtonText: "",
         negativeButtonAction: () {},
         neutralButtonText: "",
         neutralButtonAction: () {},
-        hideNeutralButton: false,
+        hideNeutralButton: true,
         closeOnBackPress: false,
       );
-      return null;
-    } else if (response.statusCode == 400) {
-      isLoading=false;
-      update();
-      print("Invalid email or password.");
-      errorDialog(
-        context,
-        "Error",
-        "Invalid email or password.",
-        positiveButtonText: "OK",
-        positiveButtonAction: () {},
-        negativeButtonText: "",
-        negativeButtonAction: () {},
-        neutralButtonText: "",
-        neutralButtonAction: () {},
-        hideNeutralButton: false,
-        closeOnBackPress: false,
-      );
-      return null;
-    } else {
-      isLoading=false;
-      update();
-      errorDialog(
-        context,
-        "Error",
-        "${response.body}.",
-        positiveButtonText: "OK",
-        positiveButtonAction: () {},
-        negativeButtonText: "",
-        negativeButtonAction: () {},
-        neutralButtonText: "",
-        neutralButtonAction: () {},
-        hideNeutralButton: false,
-        closeOnBackPress: false,
-      );
-      print("Error: ${response.body}");
       return null;
     }
-  } catch (e) {
-    isLoading=false;
-    update();
-    errorDialog(
-      context,
-      "Error",
-      "${e}.",
-      positiveButtonText: "OK",
-      positiveButtonAction: () {},
-      negativeButtonText: "",
-      negativeButtonAction: () {},
-      neutralButtonText: "",
-      neutralButtonAction: () {},
-      hideNeutralButton: false,
-      closeOnBackPress: false,
-    );
-    print("Error: $e");
-    return null;
   }
-}
+
 }

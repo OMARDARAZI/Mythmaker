@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:myth_maker/consts.dart';
+import 'package:myth_maker/story_data/view.dart';
 import 'logic.dart';
 
 class NavbarPage extends StatelessWidget {
@@ -28,93 +29,93 @@ class NavbarPage extends StatelessWidget {
                     width: 350.w,
                     height: 100.h,
                     decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                          topRight: Radius.circular(24),
-                          bottomRight: Radius.circular(47.18),
-                          bottomLeft: Radius.circular(47.18),
-
-                        ),),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24),
+                        bottomRight: Radius.circular(47.18),
+                        bottomLeft: Radius.circular(47.18),
+                      ),
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        InkWell(
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(100)),
-                          onTap: () {
-                            logic.changeIndex(0);
-                          },
-                          child: SizedBox(
-                            width: 80.w,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Iconsax.home,
-                                  size: 30.w,
-                                  color: logic.index == 0
-                                      ? primaryColor
-                                      : Colors.grey,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            InkWell(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(100)),
+                              onTap: () {
+                                logic.changeIndex(0);
+                              },
+                              child: SizedBox(
+                                width: 80.w,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Iconsax.home,
+                                      size: 30.w,
+                                      color: logic.index == 0
+                                          ? primaryColor
+                                          : Colors.grey,
+                                    ),
+                                    SizedBox(
+                                      height: 5.h,
+                                    ),
+                                    Text(
+                                      'Home',
+                                      style: TextStyle(
+                                        fontSize: 15.sp,
+                                        color: logic.index == 0
+                                            ? primaryColor
+                                            : Colors.grey,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Text(
-                                  'Home',
-                                  style: TextStyle(
-                                    fontSize: 15.sp,
-                                    color: logic.index == 0
-                                        ? primaryColor
-                                        : Colors.grey,
-                                  ),
-                                )
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 40.w,
-                        ),
-                        InkWell(
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(100)),
-                          onTap: () {
-                            logic.changeIndex(1);
-                          },
-                          child: SizedBox(
-                            width: 80.w,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Iconsax.profile_circle,
-                                  size: 30.w,
-                                  color: logic.index == 1
-                                      ? primaryColor
-                                      : Colors.grey,
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Text(
-                                  'Profile',
-                                  style: TextStyle(
-                                    fontSize: 15.sp,
-                                    color: logic.index == 1
-                                        ? primaryColor
-                                        : Colors.grey,
-                                  ),
-                                )
-                              ],
+                            SizedBox(
+                              width: 40.w,
                             ),
-                          ),
+                            InkWell(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(100)),
+                              onTap: () {
+                                logic.changeIndex(1);
+                              },
+                              child: SizedBox(
+                                width: 80.w,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Iconsax.profile_circle,
+                                      size: 30.w,
+                                      color: logic.index == 1
+                                          ? primaryColor
+                                          : Colors.grey,
+                                    ),
+                                    SizedBox(
+                                      height: 5.h,
+                                    ),
+                                    Text(
+                                      'Profile',
+                                      style: TextStyle(
+                                        fontSize: 15.sp,
+                                        color: logic.index == 1
+                                            ? primaryColor
+                                            : Colors.grey,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
                       ],
                     ),
                   ),
@@ -126,7 +127,9 @@ class NavbarPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 80.h),
             child: FloatingActionButton(
               backgroundColor: primaryColor,
-              onPressed: () {},
+              onPressed: () {
+                Get.to(()=>StoryDataPage());
+              },
               elevation: 2.0,
               child: const Icon(Icons.add),
             ),

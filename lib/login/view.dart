@@ -63,6 +63,7 @@ class LoginPage extends StatelessWidget {
                     height: 40.h,
                   ),
                   customeTextField(
+                    maxLines: 1,
                     onChanged: (p0) => logic.updateUi(),
                     hint: 'Password',
                     controller: logic.passwordController,
@@ -107,7 +108,7 @@ class LoginPage extends StatelessWidget {
                             if (logic.emailController.text == '' ||
                                 logic.passwordController.text == '') {
                             } else {
-                              logic.Login(
+                              logic.login(
                                   logic.emailController.text
                                       .trim()
                                       .toLowerCase(),

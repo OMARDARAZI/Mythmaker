@@ -11,6 +11,7 @@ class customeTextField extends StatelessWidget {
     this.keyboardType,
     this.validator,
     required this.onChanged,
+    this.maxLines,
 
   });
 
@@ -22,6 +23,8 @@ class customeTextField extends StatelessWidget {
   final void Function(String) onChanged;
   final String? Function(String?)? validator;
 
+  final int? maxLines;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,6 +35,7 @@ class customeTextField extends StatelessWidget {
         keyboardType: keyboardType,
         obscureText: isObscure,
         controller: controller,
+        maxLines: maxLines,
         style: const TextStyle(),
         decoration: InputDecoration(
           hintText: hint,

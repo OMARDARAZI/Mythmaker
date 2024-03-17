@@ -5,4 +5,5 @@ Color primaryColor = Color(0xff44e37a);
 Color white = Colors.white;
 Color black = Colors.black;
 Color gray = Colors.grey;
-String backendLink = 'http://192.168.1.110:3000';
+String backendLink = 'https://mythmaker-backend.vercel.app';
+final GeminiApi = 'AIzaSyCghSb0cIeAyhO2C6jvpkChXihGsutRhv0';

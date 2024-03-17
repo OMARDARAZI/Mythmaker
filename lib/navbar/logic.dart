@@ -25,7 +25,7 @@ class NavbarLogic extends GetxController {
 
 
   Future<User?> fetchUserData() async {
-    String apiUrl = '${backendLink}/getUserInfo'; // Make sure to replace 'yourBackendLink' with your actual backend link
+    String apiUrl = '$backendLink/getUserInfo';
     String token = await TokenUtils.retrieveToken();
     try {
       final response = await http.get(

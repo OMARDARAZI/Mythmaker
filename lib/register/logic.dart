@@ -22,10 +22,13 @@ class RegisterLogic extends GetxController {
     required String email,
     required String password,
     required String dob,
+    // Assuming bio and pfp are optional and have default values. Adjust as needed.
+    String bio = '',
+    String pfp = '',
     required BuildContext context,
   }) async {
-    final Uri apiUrl = Uri.parse("${backendLink}/register");
-    isLoading=true;
+    final Uri apiUrl = Uri.parse("$backendLink/register");
+    isLoading = true;
     update();
     try {
       final response = await http.post(
@@ -38,17 +41,18 @@ class RegisterLogic extends GetxController {
           'email': email,
           'password': password,
           'dob': dob,
+          'bio': bio,
+          'pfp': pfp,
         }),
       );
 
-      if (response.statusCode == 200) {
-        isLoading=false;
-        update();
+      isLoading = false;
+      update();
+
+      if (response.statusCode == 201) {
         final userData = jsonDecode(response.body);
-        loginLogic.Login(email, password, context);
+        loginLogic.login(email, password, context);
       } else if (response.statusCode == 400) {
-        isLoading=false;
-        update();
         errorDialog(
           context,
           "Error",
@@ -59,12 +63,10 @@ class RegisterLogic extends GetxController {
           negativeButtonAction: () {},
           neutralButtonText: "",
           neutralButtonAction: () {},
-          hideNeutralButton: false,
+          hideNeutralButton: true,
           closeOnBackPress: false,
         );
       } else {
-        isLoading=false;
-        update();
         errorDialog(
           context,
           "Error",
@@ -75,17 +77,30 @@ class RegisterLogic extends GetxController {
           negativeButtonAction: () {},
           neutralButtonText: "",
           neutralButtonAction: () {},
-          hideNeutralButton: false,
+          hideNeutralButton: true,
           closeOnBackPress: false,
         );
         throw Exception('Failed to register user.');
       }
     } catch (e) {
-      isLoading=false;
+      isLoading = false;
       update();
-
-
+      errorDialog(
+        context,
+        "Error",
+        "An unexpected error occurred. Please try again later.",
+        positiveButtonText: "OK",
+        positiveButtonAction: () {},
+        negativeButtonText: "",
+        negativeButtonAction: () {},
+        neutralButtonText: "",
+        neutralButtonAction: () {},
+        hideNeutralButton: true,
+        closeOnBackPress: false,
+      );
+      print("Error during registration: $e");
     }
   }
+
 
 }

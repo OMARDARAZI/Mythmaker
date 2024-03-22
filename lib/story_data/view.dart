@@ -212,24 +212,27 @@ class StoryDataPage extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        if (logic.formKey.currentState!.validate() &&
-                            logic.selectedGenre != null) {
-                          Get.to(
-                            () => GeneratingStoryPage(
-                              description:
-                                  logic.descriptionController.text.trim(),
-                              title: logic.titleController.text.trim(),
-                              genre: logic.selectedGenre.toString(),
-                            ),
-                          );
+                        if (logic.titleController.text == '' ||
+                            logic.descriptionController.text == '' ||
+                            logic.selectedGenre == '') {
+                        } else {
+                          if (logic.formKey.currentState!.validate() &&
+                              logic.selectedGenre != null) {
+                            Get.to(
+                              () => GeneratingStoryPage(
+                                description:
+                                    logic.descriptionController.text.trim(),
+                                title: logic.titleController.text.trim(),
+                                genre: logic.selectedGenre.toString(),
+                              ),
+                            );
+                          }
                         }
-
                         if (logic.selectedGenre == null) {
                           logic.showGenreErr();
                         } else {
                           logic.hideGenreErr();
                         }
-
                         logic.update();
                       },
                       child: AnimatedContainer(

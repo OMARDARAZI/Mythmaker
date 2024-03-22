@@ -32,7 +32,7 @@ class _GeneratingStoryPageState extends State<GeneratingStoryPage> {
     super.initState();
 
     logic.generateStory(
-        title: widget.title, desc: widget.description, genre: widget.genre);
+        title: widget.title, desc: widget.description, genre: widget.genre, context: context);
   }
 
   @override

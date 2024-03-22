@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:myth_maker/consts.dart';
+import 'package:myth_maker/search/view.dart';
 
 import 'logic.dart';
 
@@ -39,32 +40,37 @@ class HomePage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  width: 350.w,
-                  height: 80.h,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(()=>SearchPage(),transition: Transition.rightToLeftWithFade);
+                  },
+                  child: Container(
+                    width: 350.w,
+                    height: 80.h,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
                     ),
-                  ),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 20.w,
-                      ),
-                      const Icon(
-                        Iconsax.search_normal,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(
-                        width: 20.w,
-                      ),
-                      Text(
-                        'Search',
-                        style: TextStyle(color: Colors.grey),
-                      )
-                    ],
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 20.w,
+                        ),
+                        const Icon(
+                          Iconsax.search_normal,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(
+                          width: 20.w,
+                        ),
+                        Text(
+                          'Search',
+                          style: TextStyle(color: Colors.grey),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

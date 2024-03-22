@@ -35,6 +35,7 @@ class customeTextField extends StatelessWidget {
         keyboardType: keyboardType,
         obscureText: isObscure,
         controller: controller,
+        cursorColor: Colors.grey,
         maxLines: maxLines,
         style: const TextStyle(),
         decoration: InputDecoration(

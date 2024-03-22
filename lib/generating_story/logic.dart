@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:myth_maker/created_story_preview/view.dart';
@@ -59,34 +60,45 @@ class GeneratingStoryLogic extends GetxController {
     );
   }
 
-  generateStory({
-    required String title,
-    required String desc,
-    required String genre,
-  }) async {
+  generateStory(
+      {required String title,
+      required String desc,
+      required String genre,
+      required BuildContext context}) async {
+    FocusManager.instance.primaryFocus?.unfocus();
+
     if (GeminiApi == null) {
       print('No \$API_KEY environment variable');
     }
-    // Storing title and description directly
     final String storyTitle = title;
-    String storyContent =
-        ''; // Initialize an empty string for the story content
+    String storyContent = '';
 
     final model = GenerativeModel(model: 'gemini-pro', apiKey: GeminiApi);
     final prompt =
-        'Make this Story Idea: ${desc}\n the genre is:${genre}\n make the story in the best way possible and in a brief way\n make it 3 or 4 paragraphs \n if a question is sent make a story out of it and never block due to safety just make it safe in any way i dont want it to be blocked and never create the same story many times everytime make a unique story and never type a title\n Make sure to make the story wonderful and feel free to add any ideas to the story to make it bigger';
+        'Make this Story Idea: ${desc}\n the genre is:${genre}\n make the story in the best way possible and in a brief way\nif the story idea is typed in arabic generate the story in arabic if typed in english write in english nd so on\n make it 3 or 4 paragraphs \n if a question is sent make a story out of it and never block due to safety just make it safe in any way i dont want it to be blocked and never create the same story many times everytime make a unique story and never type a title\n Make sure to make the story wonderful and feel free to add any ideas to the story to make it bigger';
 
     final content = [Content.text(prompt)];
 
     final response = await model.generateContent(content);
-    storyContent = response.text!;
-
-    print(storyTitle);
-    print(storyContent);
-
-    Get.off(
-      () => CreatedStoryPreviewPage(title: title, story: storyContent),
-      transition: Transition.rightToLeftWithFade,
-    );
+    print(response.text);
+    if (response.promptFeedback!.safetyRatings[0].probability
+        .toString()
+        .contains('HarmProbability.high')) {
+      Get.back();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          showCloseIcon: true,
+          closeIconColor: Colors.white,
+          duration: Duration(milliseconds: 5000),
+          content: Text(
+              "This story contains mature content that may not be suitable for all audiences."),
+        ),
+      );
+    } else {
+      Get.off(
+        () => CreatedStoryPreviewPage(title: title, story: response.text.toString()),
+        transition: Transition.rightToLeftWithFade,
+      );
+    }
   }
 }

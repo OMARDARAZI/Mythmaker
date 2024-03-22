@@ -50,6 +50,10 @@ dependencies:
   intl:
   typewritertext:
   cached_network_image:
+  connectivity_plus:
+  fluttertoast:
+
+
 
 
 dev_dependencies:

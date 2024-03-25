@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:myth_maker/consts.dart';
+import 'package:myth_maker/widgets/userTile.dart';
 import 'logic.dart';
 
 class SearchPage extends StatelessWidget {
@@ -95,16 +96,13 @@ class SearchPage extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 500.h,
+                      height:MediaQuery.sizeOf(context).height,
                       child: TabBarView(
                         children: [
                           ListView.builder(
                             itemCount: 20,
                             itemBuilder: (context, index) {
-                              return const ListTile(
-                                leading: Icon(Icons.supervised_user_circle),
-                                title: Text('Name'),
-                              );
+                              return userTile(userName: 'userName', pfpLink: 'pfpLink');
                             },
                           ),
                           const Center(child: Text('People Search')),

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -22,6 +23,13 @@ class CreatedStoryPreviewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: FloatingActionButton(
+          child: SvgPicture.asset('assets/svg/play.svg',color: Colors.white,),
+          backgroundColor: primaryColor,
+          onPressed: () {
+          },
+        ),
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: Colors.transparent,
@@ -84,11 +92,11 @@ class CreatedStoryPreviewPage extends StatelessWidget {
                       : TextDirection.ltr,
                 ),
               ),
-              SizedBox(height: 60.h,),
+              SizedBox(
+                height: 60.h,
+              ),
               GestureDetector(
-                onTap: () {
-
-                },
+                onTap: () {},
                 child: AnimatedContainer(
                   width: 350.w,
                   height: 60.h,
@@ -102,8 +110,13 @@ class CreatedStoryPreviewPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Iconsax.edit,color: Colors.white,),
-                      SizedBox(width: 10,),
+                      Icon(
+                        Iconsax.edit,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Text(
                         'Edit Story',
                         style: TextStyle(
@@ -116,11 +129,13 @@ class CreatedStoryPreviewPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 30.h,),
+              SizedBox(
+                height: 30.h,
+              ),
               InkWell(
                 borderRadius: BorderRadius.circular(30),
                 onTap: () {
-
+                  logic.showShareBottomSheet(context);
                 },
                 child: AnimatedContainer(
                   width: 350.w,
@@ -136,8 +151,13 @@ class CreatedStoryPreviewPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.share_outlined,color: Colors.black,),
-                      SizedBox(width: 10,),
+                      Icon(
+                        Icons.share_outlined,
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Text(
                         'Share Story',
                         style: TextStyle(
@@ -150,7 +170,9 @@ class CreatedStoryPreviewPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 30.h,),
+              SizedBox(
+                height: 30.h,
+              ),
             ],
           ),
         ),

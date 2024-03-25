@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:myth_maker/consts.dart';
@@ -7,11 +8,14 @@ import 'package:myth_maker/home/view.dart';
 import 'package:myth_maker/profile/view.dart';
 import 'package:http/http.dart' as http;
 import 'package:myth_maker/utils/TokenUtils.dart';
+import 'package:myth_maker/utils/userInfo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import '../models/User.dart';
 import 'dart:math' as math;
 
 class NavbarLogic extends GetxController {
+  final ScrollController scrollController = ScrollController();
   int index = 0;
   late User user;
   var pages = [
@@ -19,12 +23,18 @@ class NavbarLogic extends GetxController {
     ProfilePage(),
   ];
 
+
   changeIndex(int index) {
+
     if (this.index != index) {
       this.index = index;
       update();
     } else {
-      //Add Navigate To top
+      scrollController.animateTo(
+        0,
+        duration: Duration(milliseconds: 700),
+        curve: Curves.easeIn,
+      );
     }
   }
 
@@ -48,19 +58,16 @@ class NavbarLogic extends GetxController {
         if (response.statusCode == 200) {
           final userData = json.decode(response.body);
           user = User.fromJson(userData);
+          UserData().setUser(user.id, user.name, user.email, user.pfp);
+
           return user;
-        } else {
-          print('Failed to fetch user data: ${response.statusCode}');
-        }
-      } catch (e) {
-        print('Error fetching user data: $e');
-      }
+        } else {}
+      } catch (e) {}
 
       await Future.delayed(initialDelay * math.pow(2, retryCount));
       retryCount++;
     }
 
-    print('Failed to fetch user data after $maxRetries attempts.');
     return null;
   }
 }

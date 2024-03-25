@@ -1,5 +1,3 @@
-
-
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
@@ -11,29 +9,31 @@ import 'package:http/http.dart' as http;
 import 'package:myth_maker/consts.dart';
 import 'package:myth_maker/navbar/view.dart';
 import 'package:myth_maker/utils/TokenUtils.dart';
-class LoginLogic extends GetxController {
+import 'package:myth_maker/utils/userInfo.dart';
 
+class LoginLogic extends GetxController {
   bool isLoading = false;
-  bool isObscure=true;
+  bool isObscure = true;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  changeObscure(){
-    isObscure=!isObscure;
+  changeObscure() {
+    isObscure = !isObscure;
     update();
   }
 
-  updateUi(){
+  updateUi() {
     update();
   }
 
-  Future<String?> login(String email, String password, BuildContext context) async {
+  Future<Map<String, dynamic>?> login(String email, String password,
+      BuildContext context) async {
     isLoading = true;
-    update(); // Assuming 'update' is a method to refresh UI, make sure it's correctly implemented.
+    update();
 
     try {
       final response = await http.post(
-        Uri.parse('$backendLink/login'), // Ensure 'backendLink' is defined and correct.
+        Uri.parse('$backendLink/login'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'email': email,
@@ -46,13 +46,19 @@ class LoginLogic extends GetxController {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        await TokenUtils.saveToken(data['accessToken']); // Corrected from 'token' to 'accessToken'.
+        await TokenUtils.saveToken(data['accessToken']);
         print(await TokenUtils.retrieveToken());
 
-        Get.offAll(() => NavbarPage(), transition: Transition.rightToLeftWithFade); // Make sure NavbarPage is defined.
-        return data['accessToken'];
+        UserData().setUser(data['userId'], data['name'], data['email'],data['pfp']);
+        Get.offAll(() => NavbarPage(),
+            transition: Transition.rightToLeftWithFade);
+        return {
+          'accessToken': data['accessToken'],
+          'userId': data['userId'],
+          'email': data['email'],
+          'name': data['name'],
+        };
       } else {
-        // Handle errors more generically to avoid redundancy.
         String errorMessage = "An unexpected error occurred.";
         if (response.statusCode == 404 || response.statusCode == 400) {
           errorMessage = "Invalid email or password.";
@@ -68,7 +74,7 @@ class LoginLogic extends GetxController {
           negativeButtonAction: () {},
           neutralButtonText: "",
           neutralButtonAction: () {},
-          hideNeutralButton: true, // Assuming you want to hide the neutral button by default.
+          hideNeutralButton: true,
           closeOnBackPress: false,
         );
         return null;
@@ -93,5 +99,6 @@ class LoginLogic extends GetxController {
       return null;
     }
   }
+
 
 }

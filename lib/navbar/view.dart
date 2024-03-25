@@ -19,6 +19,10 @@ class NavbarPage extends StatelessWidget {
           body: Stack(
             children: [
               logic.pages[logic.index],
+              IndexedStack(
+                index: logic.index,
+                children: logic.pages,
+              ),
               Positioned(
                 bottom: 20,
                 right: 25,
@@ -28,8 +32,8 @@ class NavbarPage extends StatelessWidget {
                   child: Container(
                     width: 350.w,
                     height: 100.h,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[100],
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(24),
                         topRight: Radius.circular(24),
@@ -128,7 +132,7 @@ class NavbarPage extends StatelessWidget {
             child: FloatingActionButton(
               backgroundColor: primaryColor,
               onPressed: () {
-                Get.to(()=>StoryDataPage());
+                Get.to(() => StoryDataPage());
               },
               elevation: 2.0,
               child: const Icon(Icons.add),
@@ -145,7 +149,7 @@ class NavbarPage extends StatelessWidget {
 class NotchClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    double notchSize = 70; // Diameter of the notch
+    double notchSize = 70;
     Path path = Path();
 
     path.lineTo(0, 0);

@@ -21,12 +21,25 @@ class User {
     required this.pfp,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      '_id': id,
+      'name': name,
+      'email': email,
+      'dob': dob.toIso8601String(),
+      'followers': followers,
+      'following': following,
+      'posts': posts,
+      '__v': version,
+      'pfp': pfp,
+    };
+  }
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['_id'] ?? "",
       name: json['name'] ?? "",
       email: json['email'] ?? "",
-      dob: json['dob'] != null ? DateTime.parse(json['dob']) : DateTime.now(), // Handling null with a default value (current time)
+      dob: json['dob'] != null ? DateTime.parse(json['dob']) : DateTime.now(),
       followers: json['followers'] != null ? List<String>.from(json['followers'].map((id) => id.toString())) : [],
       following: json['following'] != null ? List<String>.from(json['following'].map((id) => id.toString())) : [],
       posts: json['posts'] != null ? List<String>.from(json['posts'].map((id) => id.toString())) : [],

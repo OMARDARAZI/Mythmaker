@@ -10,20 +10,27 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:myth_maker/consts.dart';
 import 'package:myth_maker/login/view.dart';
 import 'package:myth_maker/navbar/logic.dart';
+import 'package:myth_maker/utils/TokenUtils.dart';
 
 import 'navbar/view.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  print( await TokenUtils.retrieveToken());
+  String Token=await TokenUtils.retrieveToken();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.black,
     statusBarIconBrightness: Brightness.light,
   ));
-  runApp(const MyApp());
+  await NavbarLogic().fetchUserData();
+
+  runApp(MyApp(token: Token,));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  MyApp({super.key, required this.token});
 
+  String token;
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -41,7 +48,6 @@ class _MyAppState extends State<MyApp> {
             msg: 'No Internet Connection',
             gravity: ToastGravity.CENTER,
             toastLength: Toast.LENGTH_LONG,
-
           );
         } else {
           NavbarLogic().fetchUserData();
@@ -64,7 +70,9 @@ class _MyAppState extends State<MyApp> {
       splitScreenMode: true,
       builder: (context, child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        home: LoginPage(),
+        home: widget.token==''
+            ? LoginPage()
+            : NavbarPage(),
       ),
     );
   }
